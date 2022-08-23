@@ -1,0 +1,12 @@
+config:
+  target: "https://www.demoblaze.com/"
+  # Enable the Playwright engine:
+  engines:
+    playwright: {}
+  processor: "../processors/addToCart.js"
+  beforeScenario: setUserData
+scenarios:
+  - name: 'add to cart browser test'
+    engine: playwright
+    flowFunction: "addToCart"
+    flow: []

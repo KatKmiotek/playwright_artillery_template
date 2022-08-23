@@ -1,0 +1,24 @@
+{
+  "name": "load-tests",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Kat Kmiotek",
+  "license": "MIT",
+  "scripts": {
+    "test": "./node_modules/.bin/artillery",
+    "test:load": "./node_modules/.bin/artillery run --config ./artillery.conf.yml -e load",
+    "test:func": "./node_modules/.bin/artillery run --config ./artillery.conf.yml -e functional",
+    "report": "./node_modules/.bin/artillery report --output ./output/load/report.html ./output/load/report.json",
+    "lint": "yarn run eslint ."
+  },
+  "dependencies": {
+    "artillery": "^2.0.0-14",
+    "artillery-engine-playwright": "^0.0.6",
+    "playwright": "^1.22.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2"
+  }
+}

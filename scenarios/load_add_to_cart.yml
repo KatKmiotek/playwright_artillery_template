@@ -1,0 +1,83 @@
+scenarios:
+- name: 'add to the cart test'
+  beforeScenario: setUserData
+  beforeRequest: setHeaders
+  flow:
+  - log: "{{ $processEnvironment.token }}"
+  - post:
+      json:
+        token: "{{ $processEnvironment.token }}"
+      url: /check
+  - post:
+      json:
+        id: '1'
+      url: /view
+  - options:
+      url: /check
+  - options:
+      url: /view
+  - think: 2.232
+  - post:
+      json:
+        cookie: "{{ $processEnvironment.token }}"
+        flag: true
+        id: 7d208466-d8d9-3b3d-02d7-865d11776ac8
+        prod_id: 1
+      url: /addtocart
+  - options:
+      url: /addtocart
+  - think: 5.738
+  - post:
+      json:
+        token: "{{ $processEnvironment.token }}"
+      url: /check
+  - post:
+      json:
+        cookie: "{{ $processEnvironment.token }}"
+        flag: true
+      url: /viewcart
+  - options:
+      url: /check
+  - options:
+      url: /viewcart
+  - post:
+      json:
+        id: 1
+      url: /view
+  - options:
+      url: /view
+
+# ions/{{ $processEnvironment.groupId }}/team_monthly_reductions
+  # - get:
+  #     qs:
+  #       order: total
+  #     url: /organisations/{{ $processEnvironment.groupId }}/teams/all
+  # - get:
+  #     qs:
+  #       itemsPerPage: '1000'
+  #       monthsAgo: '0'
+  #       order: average
+  #     url: /organisations/{{ $processEnvironment.groupId }}/team_monthly_reductions
+  # - get:
+  #     qs:
+  #       itemsPerPage: '1000'
+  #       monthsAgo: '1'
+  #       order: average
+  #     url: /organisations/{{ $processEnvironment.groupId }}/team_monthly_reductions
+  # - get:
+  #     qs:
+  #       order: average
+  #     url: /organisations/{{ $processEnvironment.groupId }}/teams/all
+  # - get:
+  #     url: /check_auths/{{ $processEnvironment.id }}
+  # - get:
+  #     url: /secure_users/{{ $processEnvironment.id }}
+  # - get:
+  #     qs:
+  #       itemsPerPage: '1'
+  #     url: /organisations/{{ $processEnvironment.groupId }}/organisation_challenges/upcoming
+  # - get:
+  #     url: /organisations/{{ $processEnvironment.groupId }}/organisation_challenges/history
+  # - get:
+  #     url: /organisations/{{ $processEnvironment.groupId }}/business_surveys
+  # - think: 0.567

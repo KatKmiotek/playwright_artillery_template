@@ -1,0 +1,79 @@
+scenarios:
+- name: 'add to the cart test'
+  beforeScenario: setUserData
+  beforeRequest: setHeaders
+  flow:
+  - log: "{{ $processEnvironment.token }}"
+  - post:
+      json:
+        token: "{{ $processEnvironment.token }}"
+      url: /check
+      expect:
+        - statusCode: 200
+        - contentType: json
+        - hasProperty: Item.expiration
+      capture:
+        - json: "$"
+          as: response
+  - log: "{{ response }}"
+  - post:
+      json:
+        id: '1'
+      url: /view
+      expect:
+        - statusCode: 200
+  - options:
+      url: /check
+      expect:
+        - statusCode: 200
+  - options:
+      url: /view
+      expect:
+        - statusCode: 200
+  - think: 2.232
+  - post:
+      json:
+        cookie: "{{ $processEnvironment.token }}"
+        flag: true
+        id: 7d208466-d8d9-3b3d-02d7-865d11776ac8
+        prod_id: 1
+      url: /addtocart
+      expect:
+        - statusCode: 200
+  - options:
+      url: /addtocart
+      expect:
+        - statusCode: 200
+  - think: 5.738
+  - post:
+      json:
+        token: "{{ $processEnvironment.token }}"
+      url: /check
+      expect:
+        - statusCode: 200
+  - post:
+      json:
+        cookie: "{{ $processEnvironment.token }}"
+        flag: true
+      url: /viewcart
+      expect:
+        - statusCode: 200
+  - options:
+      url: /check
+      expect:
+        - statusCode: 200
+  - options:
+      url: /viewcart
+      expect:
+        - statusCode: 200
+  - post:
+      json:
+        id: 1
+      url: /view
+      expect:
+        - statusCode: 200
+  - options:
+      url: /view
+      expect:
+        - statusCode: 200
+

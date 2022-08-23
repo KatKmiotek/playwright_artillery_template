@@ -1,0 +1,18 @@
+config:
+  target: "https://api.demoblaze.com"
+  tls:
+    rejectUnauthorized: false
+  processor: '../processors/setup.js'
+  environments:
+    load:
+      phases:
+        - name: 'warming up'
+          duration: 5
+          arrivalRate: 1
+        - name: 'start'
+          duration: 5
+          arrivalRate: 1
+    functional:
+         #  single VU is used here
+        plugins:
+            expect: {}
