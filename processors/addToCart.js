@@ -3,8 +3,7 @@ async function addToCart(page, context) {
   // Click a:has-text("Samsung galaxy s6")
   await page.locator('a:has-text("Samsung galaxy s6")').click();
   // Click text=Add to cart
-  page.once('dialog', dialog => {
-    console.log(`Dialog message: ${dialog.message()}`);
+  page.once('dialog', (dialog) => {
     dialog.dismiss().catch(() => {});
   });
   await page.locator('text=Add to cart').click();

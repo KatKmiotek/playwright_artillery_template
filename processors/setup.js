@@ -6,8 +6,8 @@ async function setUserData(context, ee, next) {
     ignoreHTTPSErrors: true,
   });
   const userLoginData = {
-    username: 'katTesting',
-    password: 'a2F0VGVzdGluZw==',
+    username: process.env.USER,
+    password: process.env.PASSWORD,
   };
   // get user data
   const response = await apiContext.post('/login', {
@@ -17,7 +17,7 @@ async function setUserData(context, ee, next) {
   // get a cookie, token, auth value from response
   const tokenString = loginResponse.split(': ')[1];
   // save user token value as variable in context used in tests
-  context.vars.$processEnvironment.token = tokenString
+  context.vars.$processEnvironment.token = tokenString;
 
   // if auth is stored in headers you can use an example below
   // const headers = response.headersArray();
@@ -25,12 +25,12 @@ async function setUserData(context, ee, next) {
   // // save a cookie value
   // context.vars.$processEnvironment.cookies = cookie;
 
-  // do the same with any other response attributes that can be useful to keep let's say user id 
+  // do the same with any other response attributes that can be useful to keep let's say user id
   next();
 }
 
 async function setHeaders(requestParams, context, ee, next) {
-  requestParams.cookies =  { tokenp_: context.vars.$processEnvironment.token}
+  requestParams.cookies = { tokenp_: context.vars.$processEnvironment.token };
   next();
 }
 
